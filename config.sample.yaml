@@ -1,0 +1,20 @@
+instance:
+  company_name: JJGDevelopment
+  hostname: my-machine
+
+# Criticality: 1 (send email) or 0 (doesn't send email)
+services:
+  - name: cups
+    criticality: 0
+  - name: sshd
+    criticality: 1
+  - name: telnet
+    criticality: 1
+
+email:
+  sender: monitoring@mycompany.com
+  receiver: team_monitoring@mycompany.com
+  smtp_server: smtp.gmail.com
+  smtp_port: 465
+  password: MyTeamMonitoring
+  subject: "Service down"
