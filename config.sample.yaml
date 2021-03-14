@@ -6,10 +6,13 @@ instance:
 services:
   - name: cups
     criticality: 0
+    log_file: /path/to/file.log
   - name: sshd
     criticality: 1
+    log_file: /path/to/file.log
   - name: telnet
     criticality: 1
+    log_file: /path/to/file.log
 
 email:
   sender: monitoring@mycompany.com
