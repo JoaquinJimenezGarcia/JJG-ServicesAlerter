@@ -17,6 +17,7 @@ def check_services():
 
         if stat != 0:
             print('Discovered service %s is stopped' % (service_name))
+            try_start_service(service_name)
             # TODO: Include method to write log on InfluxDB
             
             if service['criticality'] == 1:
@@ -57,6 +58,9 @@ def get_logs(service_logs_file):
         logs = "Log file wasn't found."
     
     return logs
+
+def try_start_service(service_name):
+    os.system('service %s start' % service_name)
 
 
 if __name__ == '__main__':
