@@ -17,12 +17,13 @@ def check_services():
 
         if stat != 0:
             print('Discovered service %s is stopped' % (service_name))
-            try_start_service(service_name)
             # TODO: Include method to write log on InfluxDB
             
             if service['criticality'] == 1:
                 service_logs = get_logs(service_logs_file)
                 send_email(config, service_name, service_logs)
+        
+        try_start_service(service_name)
 
 def send_email(config, service_name, service_logs):
     email_params = config['email']
@@ -60,7 +61,7 @@ def get_logs(service_logs_file):
     return logs
 
 def try_start_service(service_name):
-    os.system('service %s start' % service_name)
+    os.system('systemctl start %s' % service_name)
 
 
 if __name__ == '__main__':
