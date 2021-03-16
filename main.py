@@ -3,12 +3,14 @@ import yaml
 import datetime
 import smtplib, ssl
 import subprocess
+from influxdb import InfluxDBClient
 
 def check_services():
     with open("config.yaml", "r") as f:
         config = yaml.load(f)
 
     services = config['services']
+    influx_data = config['influxdb']
 
     for service in services:
         service_name = service['name']
@@ -17,13 +19,36 @@ def check_services():
 
         if stat != 0:
             print('Discovered service %s is stopped' % (service_name))
-            # TODO: Include method to write log on InfluxDB
+            write_on_influx(influx_data, service_name)
             
             if service['criticality'] == 1:
                 service_logs = get_logs(service_logs_file)
                 send_email(config, service_name, service_logs)
         
-        try_start_service(service_name)
+            try_start_service(service_name)
+
+def write_on_influx(influx_data, service_name):
+    host = influx_data['host']
+    port = influx_data['port']
+    user = influx_data['user']
+    password = influx_data['password']
+    database = influx_data['database']
+
+    client = InfluxDBClient(host, port, user, password, database)
+
+    json_body = [
+            {
+                "measurement": "services_alerter",
+                "tags": {
+                    "host": "orion-master"
+                },
+                "fields": {
+                    "value": "Service %s is down." % service_name
+                }
+            }
+        ]
+
+    client.write_points(json_body)
 
 def send_email(config, service_name, service_logs):
     email_params = config['email']

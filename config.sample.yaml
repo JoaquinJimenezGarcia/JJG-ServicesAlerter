@@ -2,6 +2,13 @@ instance:
   company_name: JJGDevelopment
   hostname: my-machine
 
+influxdb:
+  host: 127.0.0.1
+  port: 8086
+  user: my-user
+  password: secretpassword
+  database: monitoring
+
 # Criticality: 1 (send email) or 0 (doesn't send email)
 services:
   - name: cups

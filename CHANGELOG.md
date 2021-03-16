@@ -1,3 +1,8 @@
+# 0.3.0
+* Add - Compatibility to send the log to a given InfluxDB.
+* Add - Support to add InfluxDB data.
+* Fix - It only tries to start down services; before it tried everyone.
+
 # 0.2.1
 * Fix restarting service. In some systems "service" didn't work properly, so it was changed for "systemctl".
 * Trying to start the service after collecting the logs to not send anything else in the email.
