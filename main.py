@@ -66,14 +66,17 @@ def send_email(config, service_name, service_logs):
     sender_email = email_params['sender']
     receiver_email = email_params['receiver']
     password = email_params['password']
-    
-    message = """\
-        JJG-ServicesAlerter
 
+    print('sending email...')
+    
+    text = '''\
         The server %s in %s has the service %s down.
         
-        %s
-        """ % (hostname, company_name, service_name, service_logs)
+        %s''' % (hostname, company_name, service_name, service_logs)
+    
+    subject = "Problems on %s" % (company_name) 
+
+    message = 'Subject: {}\n\n{}'.format(subject, text)
     
     context = ssl.create_default_context()
     

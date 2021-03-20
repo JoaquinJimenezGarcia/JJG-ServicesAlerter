@@ -1,3 +1,7 @@
+# 0.3.2
+* Fix - Added subject when sending email.
+* Add - README.md with instructions.
+
 # 0.3.1
 * Fix - Take host name to write in Influx from config file, before it was hardcoded by error.
 
