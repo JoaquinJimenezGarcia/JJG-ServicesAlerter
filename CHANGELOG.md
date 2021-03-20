@@ -1,3 +1,6 @@
+# 0.3.1
+* Fix - Take host name to write in Influx from config file, before it was hardcoded by error.
+
 # 0.3.0
 * Add - Compatibility to send the log to a given InfluxDB.
 * Add - Support to add InfluxDB data.

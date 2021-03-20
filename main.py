@@ -10,7 +10,6 @@ def check_services():
         config = yaml.load(f)
 
     services = config['services']
-    influx_data = config['influxdb']
 
     for service in services:
         service_name = service['name']
@@ -19,7 +18,7 @@ def check_services():
 
         if stat != 0:
             print('Discovered service %s is stopped' % (service_name))
-            write_on_influx(influx_data, service_name)
+            write_on_influx(config, service_name)
             
             if service['criticality'] == 1:
                 service_logs = get_logs(service_logs_file)
@@ -27,12 +26,17 @@ def check_services():
         
             try_start_service(service_name)
 
-def write_on_influx(influx_data, service_name):
+def write_on_influx(config, service_name):
+    influx_data = config['influxdb']
+    instance_data = config['instance']
+
     host = influx_data['host']
     port = influx_data['port']
     user = influx_data['user']
     password = influx_data['password']
     database = influx_data['database']
+
+    host_sending = instance_data['hostname']
 
     client = InfluxDBClient(host, port, user, password, database)
 
@@ -40,7 +44,7 @@ def write_on_influx(influx_data, service_name):
             {
                 "measurement": "services_alerter",
                 "tags": {
-                    "host": "orion-master"
+                    "host": host_sending
                 },
                 "fields": {
                     "value": "Service %s is down." % service_name
