@@ -21,6 +21,10 @@ services:
     criticality: 1
     log_file: /path/to/file.log
 
+docker:
+  - name: hello-world
+    criticality: 1
+
 email:
   sender: monitoring@mycompany.com
   receiver: team_monitoring@mycompany.com

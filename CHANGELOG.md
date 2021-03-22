@@ -1,3 +1,6 @@
+# 0.4.0
+* Add - Compability to Docker containers.
+
 # 0.3.2
 * Fix - Added subject when sending email.
 * Add - README.md with instructions.
