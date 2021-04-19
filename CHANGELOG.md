@@ -1,5 +1,5 @@
 # 0.4.0
-* Add - Compability to Docker containers.
+* Add - Support for sending alerts to Telegram.
 
 # 0.3.2
 * Fix - Added subject when sending email.

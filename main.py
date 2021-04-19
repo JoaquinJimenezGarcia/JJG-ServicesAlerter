@@ -4,6 +4,7 @@ import datetime
 import smtplib, ssl
 import subprocess
 from influxdb import InfluxDBClient
+import telegram_send
 
 def main():
     services = config['services']
@@ -91,6 +92,8 @@ def send_email(config, service_name, service_logs):
     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, message)
+
+    telegram_send.send(messages=["[SERVICE DOWN] \n Service %s in server %s is currently down." % (service_name, hostname)])
 
 def get_logs(service_logs_file):
     try:
